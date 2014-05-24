@@ -4,7 +4,7 @@
 
 ### Purpose
 The purpose of this code is to read, organize, and aggregate data obtained from the UCI Machine Learning Repository. The data used in the project come from the Human Acitivity Recognition Using Smartphones Data Set, and they represent data collected from the accelerometers and gyroscopes embedded in Samsung Galaxy SII smartphones carried by 30 test subjects as they engaged in a variety of activities. 
-### Assumption: 
+### Assumptions: 
 In order to run the code it is necessary that all of the required text files are downloaded, unzipped, and located in the working directory for the R session. The files required for the script to run are as follows:
 <ol>
 <li>"activity_labels.txt"</li> 
