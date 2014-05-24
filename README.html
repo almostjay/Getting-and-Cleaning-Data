@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Getting and Cleaning Data Course Project</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+
+
+
+
+</head>
+
+<body>
+<h1>Getting and Cleaning Data Course Project</h1>
+
+<p><strong>This file outlines the purpose and functionality of the R Script written to complete the assignment. It also documents the assumptions made when cleaning the data. Please refer to the R Script itself for explanations about the functionality of each individual line of code.</strong></p>
+
+<h3>Purpose</h3>
+
+<p>The purpose of this code is to read, organize, and aggregate data obtained from the UCI Machine Learning Repository. The data used in the project come from the Human Acitivity Recognition Using Smartphones Data Set, and they represent data collected from the accelerometers and gyroscopes embedded in Samsung Galaxy SII smartphones carried by 30 test subjects as they engaged in a variety of activities. </p>
+
+<h3>Assumption:</h3>
+
+<p>In order to run the code it is necessary that all of the required text files are downloaded, unzipped, and located in the working directory for the R session. The files required for the script to run are as follows:</p>
+
+<ol>
+<li>&ldquo;activity_labels.txt&rdquo;</li> 
+<li>&ldquo;features.txt&rdquo;</li>      
+<li>&ldquo;features_info.txt&rdquo;</li>  
+<li>&ldquo;subject_test.txt&rdquo;</li>     
+<li>&ldquo;subject_train.txt&rdquo;</li>    
+<li>&ldquo;X_test.txt&rdquo;</li>           
+<li>&ldquo;X_train.txt&rdquo; &ldquo;y_test.txt&rdquo;</li>           
+<li>&ldquo;y_train.txt&rdquo;.</li>  
+</ol>
+
+<p>Please verify that these files are in your working directory by executing the list.files() command. The code loops through the files, reads them into R using the read.table command, and assigns each data set to a variable associated with its filename. By exploring the individual files, the dimensions of the tables they contained (# of rows/# of columns), and the codebook, it was straightforward to determine how the individual files were related. After reading in the individual files, the code then pieces together the files to create a large combined dataset which includes both the training and test data. </p>
+
+<h3>Variable selection:</h3>
+
+<p>Data was collected/generated for 561 different variables. The project instructions stated that only variables that are related to means and standard deviations were to be considered. The code utilizes the &ldquo;grep&rdquo; command to pull out only variables that have the words &ldquo;mean&rdquo; or &ldquo;std&rdquo; in their name. This pared down the variables from 561 to 79. </p>
+
+<h3>Tidy Data Set Building:</h3>
+
+<p>Analysis of the text files provided for the project led to the following conclusions:</p>
+
+<ol>
+<li>The training data set can be built using subject_train, y_train, and X_train. subject_train.txt provides the identifier for which of the 30 subjects the data corresponds to, y_train.txt provides the identifier for which of the 6 activities the data corresponds to, and X_train .txt provides the collected variables data. The variables were given the necessary column name using the &ldquo;names&rdquo; function and then the files were pieced together using the &ldquo;cbind&rdquo; function to create the complete training data set.</li>
+<li>A similar process was used to create the test data set using subject_test, y_test and X_test.</li>
+<li>The combined data frame was built by applying the &ldquo;rbind&rdquo; function to the test_data and the train_data. </li></ol>
+
+<h3>Readability/Human Interpretation</h3>
+
+<p>Several transformations were applied to the combined_data frame to make it more readable and user friendly. Parentheses and hyphens were removed from the variable names using the &ldquo;gsub&rdquo; command. The variable names were reduced to all lowercase using the &ldquo;tolower&rdquo; command, and the leading &ldquo;t&rdquo; and &ldquo;f&rdquo; characters were replaced with &ldquo;time&rdquo; and &ldquo;freq&rdquo; as per the provided codebook using the &ldquo;sub&rdquo; command. Finally, the index data that was in y_train and y_test was converted to character descriptions to which the indices correspond via the &ldquo;levels&rdquo; command and direct assignment. 
+###Second Tidy Data Set
+The project instructions ask for &ldquo;a second, independent tidy data set with the average of each variable for each activity and each subject&rdquo;. This was obtained from the original tidy data set using the &ldquo;aggregate&rdquo; command, which splits the data into specified subsets, performs a specified computation, and returns the result in a convenient form. The second data set was named &ldquo;tidy&rdquo; and the code used to obtain it is as follows:
+tidy = aggregate(data[,3:81], list(subject = data$subject, activity = data$activity),mean)</p>
+
+</body>
+
+</html>
+
